@@ -2,8 +2,8 @@ let socket
 // let mediaRecorder
 
 let gladiaKey = '15e08358-6295-491d-95b8-62a69d637cc8'
-let startR = document.getElementById("startButton")
-let stopR = document.getElementById("stopButton")
+let startbtn = document.getElementById("startButton")
+let stopbtn = document.getElementById("stopButton")
 let connect = document.getElementById("connectButton")
 
 let mediaRecorder
@@ -20,10 +20,11 @@ const options = {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        encoding: 'wav/pcm',
-        sample_rate: 16000,
-        bit_depth: 16,
-        channels: 1,
+        // encoding: 'wav/pcm',
+        // sample_rate: 16000,
+        // bit_depth: 16,
+        // channels: 1,
+        sample_rate: SAMPLE_RATE,
       }),
   };
 
@@ -138,7 +139,7 @@ async function connectToWs() {
 // stopR.addEventListener('click', stopRecording);
 // connect.addEventListener('click', connectToWs)
 
-async function start () {
+async function startR () {
     audioStream = await navigator.mediaDevices.getUserMedia({
         audio: true
     })
@@ -156,11 +157,19 @@ async function start () {
             }
         });
         recorder.startRecording();
+        socket.addEventListener("message", function(event) {
+            // All the messages we are sending are in JSON format
+            const message = JSON.parse(event.data.toString());
+            if (message.type === 'transcript' && message.data.is_final) {
+              console.log(`${message.data.id}: ${message.data.utterance.text}`)
+            }
+          });
+        
 
     })
 }
 
-function stop () {
+function stopR () {
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
         console.log("recording stopped")
@@ -174,8 +183,8 @@ function stop () {
 }
 
 
-startR.addEventListener('click', start);
-stopR.addEventListener('click', stop);
+startbtn.addEventListener('click', startR);
+stopbtn.addEventListener('click', stopR);
 connect.addEventListener('click', connectToWs)
 
 
