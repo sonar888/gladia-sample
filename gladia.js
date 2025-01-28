@@ -26,6 +26,12 @@ const options = {
         // bit_depth: 16,
         // channels: 1,
         sample_rate: SAMPLE_RATE,
+        language_config: {
+            code_switching: false,
+            languages: [
+              "nl"
+            ]
+          }
       }),
   };
 
