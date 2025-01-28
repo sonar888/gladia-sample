@@ -1,7 +1,7 @@
 
 // Initiating the variables for the functions
 
-let gladiaKey = '15e08358-6295-491d-95b8-62a69d637cc8'
+
 let startbtn = document.getElementById("startButton")
 let stopbtn = document.getElementById("stopButton")
 let connect = document.getElementById("connectButton")
@@ -12,6 +12,9 @@ let recorder
 let socket
 
 let SAMPLE_RATE = 48000;
+
+//Insert your key here
+let gladiaKey = ''
 
 
 const options = {
